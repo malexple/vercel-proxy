@@ -9,6 +9,10 @@
       "destination": "http://file.malexple.ru/media/$1"
     },
     {
+      "source": "/api/(.*)",
+      "destination": "/api/proxy/$1"
+    },
+    {
       "source": "/(.*)",
       "destination": "/api/proxy/$1"
     }
