@@ -15,6 +15,14 @@
     {
       "source": "/(.*)",
       "destination": "/api/proxy/$1"
+    },
+    {
+      "source": "/favicon.png",
+      "destination": "/favicon.png"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/api/proxy/$1"
     }
   ]
 }
