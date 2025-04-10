@@ -1,12 +1,12 @@
 {
   "rewrites": [
     {
-      "source": "/favicon.ico",
-      "destination": "/favicon.ico"
+      "source": "/static/(.*)",
+      "destination": "http://file.malexple.ru/static/$1"
     },
     {
-      "source": "/_next/static/(.*)",
-      "destination": "/_next/static/$1"
+      "source": "/media/(.*)",
+      "destination": "http://file.malexple.ru/media/$1"
     },
     {
       "source": "/(.*)",

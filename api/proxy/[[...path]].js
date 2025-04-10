@@ -1,26 +1,27 @@
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const proxy = createProxyMiddleware({
-  target: 'http://file.malexple.ru', // Используйте HTTPS, если сайт поддерживает
+  target: 'http://file.malexple.ru',
   changeOrigin: true,
-  pathRewrite: { '^/api/proxy': '' }, // Удалите, если не требуется
-  on: {
-    proxyReq: (proxyReq, req) => {
-      console.log('Проксируем запрос на:', req.url);
-    },
-    error: (err, req, res) => {
-      console.error('Ошибка прокси:', err);
-      res.status(500).end();
+  secure: false, // Отключаем проверку SSL (если нет HTTPS)
+  cookieDomainRewrite: 'localhost', // Важно для сессий
+  onProxyReq: (proxyReq, req) => {
+    // Добавляем заголовки для обхода CSRF
+    proxyReq.setHeader('Referer', 'http://file.malexple.ru');
+    proxyReq.setHeader('X-Forwarded-Host', 'file.malexple.ru');
+  },
+  onProxyRes: (proxyRes) => {
+    // Фиксим куки для локального хоста
+    const cookies = proxyRes.headers['set-cookie'];
+    if (cookies) {
+      proxyRes.headers['set-cookie'] = cookies.map(cookie =>
+        cookie.replace(/Domain=file.malexple.ru;?/i, 'Domain=localhost;')
+      );
     }
   }
 });
 
 module.exports = (req, res) => {
-  // Пропускаем запросы к статическим файлам
-  if (req.url.includes('favicon.ico')) {
-    return res.status(404).end();
-  }
-
   proxy(req, res);
 };
 
