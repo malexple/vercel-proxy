@@ -1,12 +1,12 @@
 {
   "rewrites": [
     {
-      "source": "/_next/static/:path*",
-      "destination": "/_next/static/:path*"
-    },
-    {
       "source": "/favicon.ico",
       "destination": "/favicon.ico"
+    },
+    {
+      "source": "/_next/static/(.*)",
+      "destination": "/_next/static/$1"
     },
     {
       "source": "/(.*)",
