@@ -1,7 +1,7 @@
 import { createProxyMiddleware } from 'http-proxy-middleware';
 
 const proxy = createProxyMiddleware({
-  target: 'https://file.malexple.ru', // Замените на нужный URL
+  target: 'http://file.malexple.ru', // Замените на нужный URL
   changeOrigin: true,
   pathRewrite: { '^/api/proxy': '' }, // Удаляет префикс пути (если нужно)
   followRedirects: true,
