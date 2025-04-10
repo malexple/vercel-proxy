@@ -1,27 +1,25 @@
-import { createProxyMiddleware } from 'http-proxy-middleware';
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const proxy = createProxyMiddleware({
-  target: 'http://file.malexple.ru', // Или https://
+  target: 'https://file.malexple.ru', // Убедитесь, что URL корректен
   changeOrigin: true,
   pathRewrite: { '^/api/proxy': '' }, // Удалите, если не нужно
   onProxyRes: (proxyRes) => {
-    // Добавьте CORS-заголовки, если нужно
-    proxyRes.headers['Access-Control-Allow-Origin'] = '*';
+    proxyRes.headers['Access-Control-Allow-Origin'] = '*'; // Добавьте CORS
   },
 });
 
-export default function handler(req, res) {
+module.exports = (req, res) => {
   proxy(req, res, (err) => {
     if (err) {
       console.error('Proxy error:', err);
       res.status(500).end();
     }
   });
-}
+};
 
-export const config = {
+module.exports.config = {
   api: {
     bodyParser: false,
-    externalResolver: true,
   },
 };
