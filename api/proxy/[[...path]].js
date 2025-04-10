@@ -1,7 +1,7 @@
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const proxy = createProxyMiddleware({
-  target: 'https://file.malexple.ru', // Убедитесь, что URL корректен
+  target: 'http://file.malexple.ru', // Убедитесь, что URL корректен
   changeOrigin: true,
   pathRewrite: { '^/api/proxy': '' }, // Удалите, если не нужно
   onProxyRes: (proxyRes) => {
